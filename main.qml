@@ -10,7 +10,7 @@ ApplicationWindow {
     width: 300
     height: 320
     visible: true
-    title: qsTr(" ")
+    title: qsTr("Gbyzanz")
 
     theme {
         primaryColor: Palette.colors["blue"]["500"]
@@ -77,9 +77,19 @@ ApplicationWindow {
                     }
 
                     ListItem.Standard {
-                        action: Icon {
+                        action: IconButton {
+                            id: grabScreenButton
+
+                            action: Action {
+                                iconName: "image/transform"
+                                name: qsTr("Click to select the region that will be recorded")
+                                onTriggered: print("grab the screen area...")
+                            }
+
+                            hoverAnimation: true
+                            color: Theme.light.iconColor
+                            size: Units.dp(24)
                             anchors.centerIn: parent
-                            name: "maps/place"
                         }
 
                         content: RowLayout {
@@ -121,9 +131,19 @@ ApplicationWindow {
                     }
 
                     ListItem.Standard {
-                        action: Icon {
+                        action: IconButton {
+                            id: fileNameButton
+
+                            action: Action {
+                                iconName: "content/save"
+                                name: qsTr("Regenerate the file name")
+                                onTriggered: fileNameField.regenerateName()
+                            }
+
+                            hoverAnimation: true
+                            color: Theme.light.iconColor
+                            size: Units.dp(24)
                             anchors.centerIn: parent
-                            name: "maps/place"
                         }
 
                         content: RowLayout {
@@ -131,17 +151,19 @@ ApplicationWindow {
                             width: parent.width
 
                             TextField {
+                                id: fileNameField
                                 Layout.alignment: Qt.AlignCenter
                                 Layout.preferredWidth: 0.7 * parent.width
 
-                                placeholderText: "File name"
-
-                                function generateName() {
-                                    return "Test name"
+                                function regenerateName() {
+                                    text = "Gbyzanz" + new Date().toLocaleString( Qt.locale(), "yyyyMMddhhmmss")
                                 }
+
+                                Component.onCompleted: regenerateName()
                             }
 
                             MenuField {
+                                id: fileFormatMenu
                                 Layout.alignment: Qt.AlignCenter
                                 Layout.preferredWidth: 0.3 * parent.width
 
@@ -198,6 +220,10 @@ ApplicationWindow {
                             checked: true
                             text: "Record audio"
                             darkBackground: false
+                            enabled: {
+                                var ff = fileFormatMenu.selectedText
+                                return (ff == ".webm" || ff == ".ogg" || ff == ".ogv" || ff == ".byzanz")
+                            }
                         }
 
 
