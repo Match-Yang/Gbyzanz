@@ -37,7 +37,17 @@ ApplicationWindow {
     initialPage: Page {
         id: page
 
-        title: qsTr("Gbyzanz")
+        actions: [
+            Action {
+                iconName: "file/folder"
+                name: qsTr("Open save folder")
+                onTriggered: print ("Open save folder")
+            },
+            Action {
+                iconName: "image/color_lens"
+                name: qsTr("Style")
+            }
+        ]
 
         backAction: Action {
             iconName: "image/dehaze"
