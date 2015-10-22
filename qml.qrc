@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>GrabRectItem.qml</file>
+        <file>FileNameItem.qml</file>
+        <file>DurationFiled.qml</file>
     </qresource>
 </RCC>

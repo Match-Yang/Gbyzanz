@@ -24,9 +24,9 @@ ApplicationWindow {
         id:controller
         onRecordFinished: {
             if (exitCode == 0) {
-                fileNameField.regenerateName()
+                fileNameItem.regenerateName()
                 progressBar.setValue(0)
-                controller.saveConfig()
+//                controller.saveConfig()
             }
             else
                 print ("Record error:", exitCode, errorString)
@@ -73,179 +73,17 @@ ApplicationWindow {
                     Layout.preferredHeight: Units.dp(8)
                 }
 
-                ListItem.Standard {
-                    action: IconButton {
-                        id: grabScreenButton
-
-                        action: Action {
-                            iconName: "image/transform"
-                            name: qsTr("Click to select the region that will be recorded")
-                            onTriggered: print("grab the screen area...")
-                        }
-
-                        hoverAnimation: true
-                        color: Theme.light.iconColor
-                        size: Units.dp(24)
-                        anchors.centerIn: parent
-                    }
-
-                    content: RowLayout {
-                        anchors.centerIn: parent
-                        width: parent.width
-
-                        TextField {
-                            id: xField
-                            Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredWidth: 0.25 * parent.width
-
-                            floatingLabel: true
-                            placeholderText: "X"
-
-                            function getValue() {
-                                if (text == "")
-                                    return 0;
-                                else
-                                    return Number(text)
-                            }
-                        }
-
-                        TextField {
-                            id: yField
-                            Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredWidth: 0.25 * parent.width
-
-                            floatingLabel: true
-                            placeholderText: "Y"
-
-                            function getValue() {
-                                if (text == "")
-                                    return 0;
-                                else
-                                    return Number(text)
-                            }
-                        }
-
-                        TextField {
-                            id: widthField
-                            Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredWidth: 0.25 * parent.width
-
-                            floatingLabel: true
-                            placeholderText: "Width"
-
-                            function getValue() {
-                                if (text == "")
-                                    return 0;
-                                else
-                                    return Number(text)
-                            }
-                        }
-
-                        TextField {
-                            id: heightField
-                            Layout.alignment: Qt.AlignVCenter
-                            Layout.preferredWidth: 0.25 * parent.width
-
-                            floatingLabel: true
-                            placeholderText: "Height"
-
-
-                            function getValue() {
-                                if (text == "")
-                                    return 0;
-                                else
-                                    return Number(text)
-                            }
-                        }
-                    }
+                GrabRectItem {
+                    id: grabRectItem
                 }
 
-                ListItem.Standard {
-                    action: IconButton {
-                        id: fileNameButton
-
-                        action: Action {
-                            iconName: "content/save"
-                            name: qsTr("Regenerate the file name")
-                            onTriggered: fileNameField.regenerateName()
-                        }
-
-                        hoverAnimation: true
-                        color: Theme.light.iconColor
-                        size: Units.dp(24)
-                        anchors.centerIn: parent
-                    }
-
-                    content: RowLayout {
-                        anchors.centerIn: parent
-                        width: parent.width
-
-                        TextField {
-                            id: fileNameField
-                            Layout.alignment: Qt.AlignCenter
-                            Layout.preferredWidth: 0.7 * parent.width
-
-                            function regenerateName() {
-                                text = "Gbyzanz" + new Date().toLocaleString( Qt.locale(), "yyyyMMddhhmmss")
-                            }
-
-                            Component.onCompleted: regenerateName()
-                        }
-
-                        MenuField {
-                            id: fileFormatMenu
-                            Layout.alignment: Qt.AlignCenter
-                            Layout.preferredWidth: 0.3 * parent.width
-
-                            model: [".gif", ".flv", ".ogg", ".ogv", ".webm", ".byzanz"]
-                        }
-                    }
+                FileNameItem {
+                    id: fileNameItem
                 }
 
-                QuickControls.ExclusiveGroup { id: durationGroup }
-
-                ListItem.Standard {
-                    implicitHeight:Units.dp(70)
-                    action: RadioButton {
-                        id: durationRadio
-                        checked: true
-                        text: "Duration(Second)"
-                        canToggle: true
-                        exclusiveGroup: durationGroup
-                    }
-
-                    content: TextField {
-                        id: durationTextField
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - durationRadio.width
-                        text: "10"
-                        horizontalAlignment: Qt.AlignHCenter
-
-                        function getValue() {
-                            if (!durationRadio.checked || text == "")
-                                return 0;
-                            else
-                                return Number(text)
-                        }
-                    }
-                }
-
-                ListItem.Standard {
-                    action: RadioButton {
-                        id:commandRadio
-                        text: "Command"
-                        canToggle: true
-                        exclusiveGroup: durationGroup
-                    }
-
-                    content: TextField {
-                        id: commTextField
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width - commandRadio.width
-                        helperText: "Record untill the command exit."
-                    }
+                DurationFiled {
+                    id: durationField
+                    width: parent.width
                 }
 
                 RowLayout {
@@ -260,7 +98,7 @@ ApplicationWindow {
                         text: "Record audio"
                         darkBackground: false
                         enabled: {
-                            var ff = fileFormatMenu.selectedText
+                            var ff = fileNameItem.getFileFormat()
                             return (ff == ".webm" || ff == ".ogg" || ff == ".ogv" || ff == ".byzanz")
                         }
                     }
@@ -298,16 +136,16 @@ ApplicationWindow {
                         text: "Record"
                         textColor: Theme.primaryColor
                         onClicked: {
-                            controller.recordScreen(Qt.rect(xField.getValue(),
-                                                            yField.getValue(),
-                                                            widthField.getValue(),
-                                                            heightField.getValue()),
-                                                    fileNameField.text + fileFormatMenu.selectedText,
-                                                    durationTextField.getValue(),
-                                                    commTextField.text,
+                            controller.recordScreen(Qt.rect(grabRectItem.getXValue(),
+                                                            grabRectItem.getYValue(),
+                                                            grabRectItem.getWidthValue(),
+                                                            grabRectItem.getHeightValue()),
+                                                    fileNameItem.getFileName(),
+                                                    durationField.getDuration(),
+                                                    durationField.getCommand(),
                                                     (audioCheckBox.checked && audioCheckBox.enabled),
                                                     cursorCheckBox.checked);
-                            if (durationRadio.checked)
+                            if (durationField.useDuration)
                                 progressAnimation.start()
                         }
                     }
@@ -325,7 +163,7 @@ ApplicationWindow {
                     id: progressAnimation
 
                     NumberAnimation {
-                        duration: 1000 * durationTextField.getValue()
+                        duration: 1000 * durationField.getDuration()
                         from: 0
                         to: 1
                     }
