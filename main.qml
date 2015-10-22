@@ -20,13 +20,23 @@ ApplicationWindow {
         tabHighlightColor: "white"
     }
 
+    function saveAllConfig() {
+        controller.saveConfig(grabRectItem.getRect(),
+                              fileNameItem.getFileFormat(),
+                              durationField.useDuration,
+                              durationField.getDuration(),
+                              durationField.useCommand,
+                              durationField.getCommand(),
+                              audioCheckBox.checked,
+                              cursorCheckBox.checked)
+    }
+
     Controller {
         id:controller
         onRecordFinished: {
             if (exitCode == 0) {
                 fileNameItem.regenerateName()
                 progressBar.setValue(0)
-//                controller.saveConfig()
             }
             else
                 print ("Record error:", exitCode, errorString)
@@ -94,7 +104,7 @@ ApplicationWindow {
 
                     CheckBox {
                         id: audioCheckBox
-                        checked: true
+                        checked: controller.recordAudio()
                         text: "Record audio"
                         darkBackground: false
                         enabled: {
@@ -106,7 +116,7 @@ ApplicationWindow {
 
                     CheckBox {
                         id: cursorCheckBox
-                        checked: true
+                        checked: controller.recordCursor()
                         text: "Record mouse cursor"
                         darkBackground: false
                     }
@@ -129,7 +139,10 @@ ApplicationWindow {
                     Button {
                         text: "Cancel"
                         textColor: Theme.primaryColor
-                        onClicked: Qt.quit()
+                        onClicked: {
+                            saveAllConfig()
+                            Qt.quit()
+                        }
                     }
 
                     Button {
@@ -147,6 +160,8 @@ ApplicationWindow {
                                                     cursorCheckBox.checked);
                             if (durationField.useDuration)
                                 progressAnimation.start()
+
+                            saveAllConfig()
                         }
                     }
                 }

@@ -7,6 +7,10 @@ import Controller 1.0
 
 ListItem.Standard {
 
+    function getRect() {
+        return Qt.rect(getXValue(), getYValue(), getWidthValue(), getHeightValue())
+    }
+
     function getXValue() {
         return xField.getValue()
     }
@@ -22,6 +26,15 @@ ListItem.Standard {
     function getHeightValue() {
         return heightField.getValue()
     }
+
+    Component.onCompleted: {
+        xField.text = controller.getRecordRect().x
+        yField.text = controller.getRecordRect().y
+        widthField.text = controller.getRecordRect().width
+        heightField.text = controller.getRecordRect().height
+    }
+
+    Controller {id: controller}
 
     action: IconButton {
         id: grabScreenButton

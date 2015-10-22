@@ -1,11 +1,13 @@
 import QtQuick 2.0
 import Material 0.1
 import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.0
 import QtQuick.Controls 1.2 as QuickControls
 import Material.ListItems 0.1 as ListItem
 import Controller 1.0
 
 ListItem.Standard {
+
 
     function getFileName() {
         return controller.getSavePath() + "/" + fileNameField.text + fileFormatMenu.selectedText
@@ -19,8 +21,31 @@ ListItem.Standard {
         fileNameField.regenerateName()
     }
 
-    Controller {
-        id: controller
+    property var _formatList: [".gif", ".flv", ".ogg", ".ogv", ".webm", ".byzanz"]
+    property string _savePath: ""
+
+    Component.onCompleted: {
+        var tmpIndex = _formatList.indexOf(controller.getFileFormat())
+        if (tmpIndex != -1)
+            fileFormatMenu.selectedIndex = tmpIndex
+        fileDialog.folder = "file://" + controller.getSavePath()
+    }
+
+    Controller {id: controller}
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Please choose a folder")
+        selectExisting: true
+        selectFolder: true
+        selectMultiple: false
+        onAccepted: {
+            controller.saveFilePath(fileDialog.folder.toString().replace("file:///", "/"))
+            visible = false
+        }
+        onRejected: {
+            visible = false
+        }
     }
 
     action: IconButton {
@@ -28,8 +53,8 @@ ListItem.Standard {
 
         action: Action {
             iconName: "content/save"
-            name: qsTr("Regenerate the file name")
-            onTriggered: fileNameField.regenerateName()
+            name: qsTr("Change save directory.")
+            onTriggered: fileDialog.visible = true
         }
 
         hoverAnimation: true
@@ -59,7 +84,7 @@ ListItem.Standard {
             Layout.alignment: Qt.AlignCenter
             Layout.preferredWidth: 0.3 * parent.width
 
-            model: [".gif", ".flv", ".ogg", ".ogv", ".webm", ".byzanz"]
+            model: _formatList
         }
     }
 }

@@ -28,7 +28,6 @@ void Controller::recordScreen(QRect rec, QString fileName, int duration, QString
 }
 
 void Controller::saveConfig(const QRect &rec,
-                            const QString &savePath,
                             const QString &fileFormat,
                             bool useDuration,
                             int duration,
@@ -45,7 +44,6 @@ void Controller::saveConfig(const QRect &rec,
     m_settings->endGroup();
 
     m_settings->beginGroup("File");
-    m_settings->setValue("save_path", savePath);
     m_settings->setValue("file_format", fileFormat);
     m_settings->endGroup();
 
@@ -59,6 +57,13 @@ void Controller::saveConfig(const QRect &rec,
     m_settings->beginGroup("ExtendRecord");
     m_settings->setValue("record_audio", recordAudio);
     m_settings->setValue("record_cursor", recordCursor);
+    m_settings->endGroup();
+}
+
+void Controller::saveFilePath(const QString &path)
+{
+    m_settings->beginGroup("File");
+    m_settings->setValue("save_path", path);
     m_settings->endGroup();
 }
 
@@ -158,6 +163,6 @@ void Controller::initSettings()
         dir.mkpath(getSavePath());
     }
 
-    qWarning() << "Configure File: " << m_settings->fileName();
+//    qWarning() << "Configure File: " << m_settings->fileName();
 }
 

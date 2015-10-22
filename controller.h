@@ -20,7 +20,6 @@ public:
                              bool recordCursor);
 
     Q_INVOKABLE void saveConfig(const QRect &rec,
-                                const QString &savePath,
                                 const QString &fileFormat,
                                 bool useDuration,
                                 int duration,
@@ -28,6 +27,7 @@ public:
                                 const QString &command,
                                 bool recordAudio,
                                 bool recordCursor);
+    Q_INVOKABLE void saveFilePath(const QString &path);
 
     Q_INVOKABLE QRect getRecordRect() const;
     Q_INVOKABLE QString getSavePath() const;

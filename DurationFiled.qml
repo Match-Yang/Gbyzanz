@@ -19,7 +19,14 @@ ColumnLayout {
         return commTextField.getValue()
     }
 
-    anchors.left: parent.left
+    Component.onCompleted: {
+        durationRadio.checked = controller.useDuration()
+        durationTextField.text = controller.duration()
+        commandRadio.checked = controller.useCommand()
+        commTextField.text = controller.command()
+    }
+
+    Controller {id: controller}
 
     QuickControls.ExclusiveGroup { id: durationGroup }
 
@@ -27,7 +34,6 @@ ColumnLayout {
         implicitHeight:Units.dp(70)
         action: RadioButton {
             id: durationRadio
-            checked: true
             text: "Duration(Second)"
             canToggle: true
             exclusiveGroup: durationGroup
