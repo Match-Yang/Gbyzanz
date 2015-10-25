@@ -62,6 +62,7 @@ ListItem.Standard {
 
             floatingLabel: true
             placeholderText: qsTr("X")
+            validator: IntValidator {}
 
             function getValue() {
                 if (text == "")
@@ -78,6 +79,7 @@ ListItem.Standard {
 
             floatingLabel: true
             placeholderText: qsTr("Y")
+            validator: IntValidator {}
 
             function getValue() {
                 if (text == "")
@@ -94,6 +96,7 @@ ListItem.Standard {
 
             floatingLabel: true
             placeholderText: qsTr("Width")
+            validator: IntValidator {}
 
             function getValue() {
                 if (text == "")
@@ -110,7 +113,7 @@ ListItem.Standard {
 
             floatingLabel: true
             placeholderText: qsTr("Height")
-
+            validator: IntValidator {}
 
             function getValue() {
                 if (text == "")

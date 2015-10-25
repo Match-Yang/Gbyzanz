@@ -41,6 +41,7 @@ ColumnLayout {
 
         content: TextField {
             id: durationTextField
+            validator: IntValidator {}
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width - durationRadio.width
