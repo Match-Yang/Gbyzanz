@@ -53,7 +53,7 @@ ListItem.Standard {
 
         action: Action {
             iconName: "content/save"
-            name: qsTr("Change save directory.")
+            name: qsTr("Change storage folder")
             onTriggered: fileDialog.visible = true
         }
 

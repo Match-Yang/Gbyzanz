@@ -50,8 +50,11 @@ ApplicationWindow {
         actions: [
             Action {
                 iconName: "file/folder"
-                name: qsTr("Open save folder")
-                onTriggered: print ("Open save folder")
+                name: qsTr("Open the storage folder")
+                onTriggered: {
+                    Qt.openUrlExternally("file://" + controller.getSavePath())
+                    print ("Open the storage folder")
+                }
             },
             Action {
                 iconName: "image/color_lens"
