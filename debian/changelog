@@ -1,0 +1,5 @@
+gbyzanz (0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Deepin Packages Builder <packages@linuxdeepin.com>  Wed, 04 Nov 2015 10:18:30 +0800
