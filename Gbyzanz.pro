@@ -15,5 +15,14 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
+isEmpty(PREFIX) {
+    PREFIX=/usr
+}
+
+BINDIR = $$PREFIX/bin
+
+target.path=$$BINDIR
+INSTALLS += target
+
 HEADERS += \
     controller.h

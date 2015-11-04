@@ -10,5 +10,5 @@ Homepage: https://github.com/Match-Yang/Gbyzanz
 
 Package: gbyzanz
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, byzanz, qml-material
+Depends: ${shlibs:Depends}, ${misc:Depends}, byzanz, qml-material,libqt5svg5,qml-module-qtgraphicaleffects
 Description: The GUI version byzanz
