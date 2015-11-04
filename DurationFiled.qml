@@ -70,7 +70,8 @@ ColumnLayout {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width - commandRadio.width
-            helperText: "Record untill the command exit."
+            floatingLabel: true
+            placeholderText: qsTr("Record untill the command exit.")
 
             function getValue() {
                 if (!commandRadio.checked)

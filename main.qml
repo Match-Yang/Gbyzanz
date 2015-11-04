@@ -8,8 +8,8 @@ import Controller 1.0
 ApplicationWindow {
     id: demo
 
-    width: 300
-    height: 320
+    width: Units.dp(430)
+    height: Units.dp(480)
     visible: true
     title: qsTr("Gbyzanz")
 
