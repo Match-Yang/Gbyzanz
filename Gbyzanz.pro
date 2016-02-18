@@ -1,5 +1,7 @@
 TEMPLATE = app
 
+TARGET = gbyzanz
+
 QT += qml quick widgets
 
 SOURCES += main.cpp \

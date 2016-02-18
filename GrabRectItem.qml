@@ -7,6 +7,13 @@ import Controller 1.0
 
 ListItem.Standard {
 
+    function setRect(x, y, w, h) {
+        xField.text = x
+        yField.text = y
+        widthField.text = w
+        heightField.text = h
+    }
+
     function getRect() {
         return Qt.rect(getXValue(), getYValue(), getWidthValue(), getHeightValue())
     }
@@ -34,6 +41,32 @@ ListItem.Standard {
         heightField.text = controller.getRecordRect().height
     }
 
+    Loader {
+        id: capturerLoader
+        property bool initFlag: true
+        sourceComponent: ScreenCapturer {
+            onConfirm: {
+                setRect(pos.x, pos.y, w, h)
+                mainWin.show()
+                capturerLoader.active = false
+            }
+            onCancel: {
+                mainWin.show()
+                capturerLoader.active = false
+            }
+            Component.onCompleted: {
+                showFullScreen()
+            }
+        }
+        //fixme: ScreenCapturer's background can not be transparent if showFullScreen() not call at initialization
+        Timer {
+            interval: 1
+            repeat: false
+            onTriggered: capturerLoader.active = false
+            Component.onCompleted: start()
+        }
+    }
+
     Controller {id: controller}
 
     action: IconButton {
@@ -42,7 +75,11 @@ ListItem.Standard {
         action: Action {
             iconName: "image/transform"
             name: qsTr("Click to select the region that will be recorded")
-            onTriggered: print("grab the screen area...")
+            onTriggered: {
+                print("grab the screen area...")
+                mainWin.hide()
+                capturerLoader.active = true
+            }
         }
 
         hoverAnimation: true

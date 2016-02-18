@@ -6,7 +6,7 @@ import Material.ListItems 0.1 as ListItem
 import Controller 1.0
 
 ApplicationWindow {
-    id: demo
+    id: mainWin
 
     width: Units.dp(430)
     height: Units.dp(480)

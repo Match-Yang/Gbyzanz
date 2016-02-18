@@ -4,5 +4,6 @@
         <file>GrabRectItem.qml</file>
         <file>FileNameItem.qml</file>
         <file>DurationFiled.qml</file>
+        <file>ScreenCapturer.qml</file>
     </qresource>
 </RCC>

@@ -6,6 +6,11 @@ tests/tst_material
 build
 *.qmlproject.user*
 *~
+moc_*
+qrc_*
+gbyzanz
+debian/gbyzanz/*
+debian/gbyzanz.*
 
 deploy_key
 deploy_key.pub
