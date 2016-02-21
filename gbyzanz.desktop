@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Gbyzanz
+Comment=Simple Screen Recorder
+Comment[zh_CN]=简单的屏幕录像工具
+Exec=gbyzanz
+Icon=gbyzanz
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Graphics;2DGraphics;
+Keywords=Graphics;Screen;图像;屏幕

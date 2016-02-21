@@ -23,8 +23,14 @@ isEmpty(PREFIX) {
 
 BINDIR = $$PREFIX/bin
 
+desktop.path = $${PREFIX}/share/applications/
+desktop.files = gbyzanz.desktop
+
+icon.path = $${PREFIX}/share/icons/hicolor/scalable/apps/
+icon.files = gbyzanz.svg
+
 target.path=$$BINDIR
-INSTALLS += target
+INSTALLS += target desktop icon
 
 HEADERS += \
     controller.h
