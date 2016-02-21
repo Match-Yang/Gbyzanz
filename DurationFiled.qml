@@ -34,7 +34,7 @@ ColumnLayout {
         implicitHeight:Units.dp(70)
         action: RadioButton {
             id: durationRadio
-            text: "Duration(Second)"
+            text: qsTr("Duration(Second)")
             canToggle: true
             exclusiveGroup: durationGroup
         }
@@ -60,7 +60,7 @@ ColumnLayout {
     ListItem.Standard {
         action: RadioButton {
             id:commandRadio
-            text: "Command"
+            text: qsTr("Command")
             canToggle: true
             exclusiveGroup: durationGroup
         }
@@ -71,7 +71,7 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width - commandRadio.width
             floatingLabel: true
-            placeholderText: qsTr("Record untill the command exit.")
+            placeholderText: qsTr("Record untill the command exit")
 
             function getValue() {
                 if (!commandRadio.checked)

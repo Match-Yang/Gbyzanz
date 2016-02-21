@@ -136,7 +136,7 @@ ApplicationWindow {
                     CheckBox {
                         id: audioCheckBox
                         checked: controller.recordAudio()
-                        text: "Record audio"
+                        text: qsTr("Record audio")
                         darkBackground: false
                         enabled: {
                             var ff = fileNameItem.getFileFormat()
@@ -148,7 +148,7 @@ ApplicationWindow {
                     CheckBox {
                         id: cursorCheckBox
                         checked: controller.recordCursor()
-                        text: "Record mouse cursor"
+                        text: qsTr("Record mouse cursor")
                         darkBackground: false
                     }
                 }
@@ -168,7 +168,7 @@ ApplicationWindow {
                     }
 
                     Button {
-                        text: "Cancel"
+                        text: qsTr("Cancel")
                         textColor: Theme.primaryColor
                         onClicked: {
                             saveAllConfig()
@@ -177,7 +177,7 @@ ApplicationWindow {
                     }
 
                     Button {
-                        text: "Record"
+                        text: qsTr("Record")
                         textColor: Theme.primaryColor
                         onClicked: {
                             controller.recordScreen(Qt.rect(grabRectItem.getXValue(),

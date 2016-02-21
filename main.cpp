@@ -8,6 +8,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // install translators
+    QTranslator translator;
+    translator.load("/usr/share/Gbyzanz/translations/gbyzanz_" + QLocale::system().name());
+    app.installTranslator(&translator);
 
     qmlRegisterType<Controller>("Controller", 1, 0, "Controller");
 

@@ -29,8 +29,22 @@ desktop.files = gbyzanz.desktop
 icon.path = $${PREFIX}/share/icons/hicolor/scalable/apps/
 icon.files = gbyzanz.svg
 
+translations.path = $${PREFIX}/share/Gbyzanz/translations/
+translations.files = translations/*.qm
+
 target.path=$$BINDIR
-INSTALLS += target desktop icon
+INSTALLS += target desktop icon translations
 
 HEADERS += \
     controller.h
+
+lupdate_only {
+SOURCES = main.qml \
+    ScreenCapturer.qml \
+    DurationFiled.qml \
+    FileNameItem.qml \
+    GrabRectItem.qml
+}
+
+TRANSLATIONS += \
+    translations/gbyzanz_zh_CN.ts
