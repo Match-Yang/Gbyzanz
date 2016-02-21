@@ -14,9 +14,10 @@ ApplicationWindow {
     title: qsTr("Gbyzanz")
 
     theme {
-        primaryColor: Palette.colors["blue"]["500"]
+        primaryColor: controller.getThemePColor()
+        accentColor: controller.getThemeAColor()
+        backgroundColor: controller.getThemeBColor()
         primaryDarkColor: Palette.colors["blue"]["700"]
-        accentColor: Palette.colors["red"]["A200"]
         tabHighlightColor: "white"
     }
 
@@ -33,6 +34,37 @@ ApplicationWindow {
 
     Controller {
         id:controller
+
+        function getThemePColor() {
+            var colorName = controller.getThemePrimaryColor();
+            if (colorName == "") {
+                return Palette.colors["blue"]["500"]
+            }
+            else {
+                return colorName
+            }
+        }
+
+        function getThemeAColor() {
+            var colorName = controller.getThemeAccentColor();
+            if (colorName == "") {
+                return Palette.colors["red"]["A200"]
+            }
+            else {
+                return colorName
+            }
+        }
+
+        function getThemeBColor() {
+            var colorName = controller.getThemeBackgroundColor();
+            if (colorName == "") {
+                return "white"
+            }
+            else {
+                return colorName
+            }
+        }
+
         onRecordFinished: {
             if (exitCode == 0) {
                 fileNameItem.regenerateName()
@@ -47,6 +79,8 @@ ApplicationWindow {
     initialPage: Page {
         id: page
 
+        title: "Gbyzanz"
+
         actions: [
             Action {
                 iconName: "file/folder"
@@ -59,15 +93,9 @@ ApplicationWindow {
             Action {
                 iconName: "image/color_lens"
                 name: qsTr("Style")
+                onTriggered: colorPicker.show()
             }
         ]
-
-        backAction: Action {
-            iconName: "image/dehaze"
-            name: qsTr("Specification")
-            onTriggered: print("Show specification...")
-        }
-
 
         Item {
             anchors.fill: parent
@@ -184,6 +212,63 @@ ApplicationWindow {
                         duration: 1000 * durationField.getDuration()
                         from: 0
                         to: 1
+                    }
+                }
+            }
+        }
+    }
+
+    Dialog {
+        id: colorPicker
+        title: "Pick color"
+
+        positiveButtonText: "Done"
+
+        MenuField {
+            id: selection
+            model: ["Primary color", "Accent color", "Background color"]
+            width: Units.dp(160)
+        }
+
+        Grid {
+            columns: 7
+            spacing: Units.dp(8)
+
+            Repeater {
+                model: [
+                    "red", "pink", "purple", "deepPurple", "indigo",
+                    "blue", "lightBlue", "cyan", "teal", "green",
+                    "lightGreen", "lime", "yellow", "amber", "orange",
+                    "deepOrange", "grey", "blueGrey", "brown", "black",
+                    "white"
+                ]
+
+                Rectangle {
+                    width: Units.dp(30)
+                    height: Units.dp(30)
+                    radius: Units.dp(2)
+                    color: Palette.colors[modelData]["500"]
+                    border.width: modelData === "white" ? Units.dp(2) : 0
+                    border.color: Theme.alpha("#000", 0.26)
+
+                    Ink {
+                        anchors.fill: parent
+
+                        onPressed: {
+                            switch(selection.selectedIndex) {
+                                case 0:
+                                    theme.primaryColor = parent.color
+                                    break;
+                                case 1:
+                                    theme.accentColor = parent.color
+                                    break;
+                                case 2:
+                                    theme.backgroundColor = parent.color
+                                    break;
+                            }
+
+                            controller.saveThemeColor(theme.primaryColor, theme.accentColor, theme.backgroundColor)
+                        }
                     }
                 }
             }

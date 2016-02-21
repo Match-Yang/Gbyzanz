@@ -27,6 +27,9 @@ public:
                                 const QString &command,
                                 bool recordAudio,
                                 bool recordCursor);
+    Q_INVOKABLE void saveThemeColor(const QString &primaryColor,
+                                    const QString &accentColor,
+                                    const QString &backgroundColor);
     Q_INVOKABLE void saveFilePath(const QString &path);
 
     Q_INVOKABLE QRect getRecordRect() const;
@@ -38,6 +41,9 @@ public:
     Q_INVOKABLE QString command() const;
     Q_INVOKABLE bool recordAudio() const;
     Q_INVOKABLE bool recordCursor() const;
+    Q_INVOKABLE QString getThemePrimaryColor() const;
+    Q_INVOKABLE QString getThemeAccentColor() const;
+    Q_INVOKABLE QString getThemeBackgroundColor() const;
 
 signals:
     void recordFinished(int exitCode, QString errorString);

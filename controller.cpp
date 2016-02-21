@@ -60,6 +60,15 @@ void Controller::saveConfig(const QRect &rec,
     m_settings->endGroup();
 }
 
+void Controller::saveThemeColor(const QString &primaryColor, const QString &accentColor, const QString &backgroundColor)
+{
+    m_settings->beginGroup("Theme");
+    m_settings->setValue("primary_color", primaryColor);
+    m_settings->setValue("accent_color", accentColor);
+    m_settings->setValue("background_color", backgroundColor);
+    m_settings->endGroup();
+}
+
 void Controller::saveFilePath(const QString &path)
 {
     m_settings->beginGroup("File");
@@ -117,6 +126,21 @@ bool Controller::recordAudio() const
 bool Controller::recordCursor() const
 {
     return m_settings->value("ExtendRecord/record_cursor").toBool();
+}
+
+QString Controller::getThemePrimaryColor() const
+{
+    return m_settings->value("Theme/primary_color").toString();
+}
+
+QString Controller::getThemeAccentColor() const
+{
+    return m_settings->value("Theme/accent_color").toString();
+}
+
+QString Controller::getThemeBackgroundColor() const
+{
+    return m_settings->value("Theme/background_color").toString();
 }
 
 void Controller::onRecordFinish()
