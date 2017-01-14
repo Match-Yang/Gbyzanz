@@ -2,7 +2,10 @@
 
 [![License](https://img.shields.io/badge/license-GPLv3%2B-blue.svg)](http://www.gnu.org/licenses/gpl.html)
 
-Gbyzanz is a GUI front-end for byzanz which develop by QML.It is bower by [GNOME/byzanz](https://github.com/GNOME/byzanz) and [qml-material](https://github.com/papyros/qml-material).It only test on deepin OS.
+Gbyzanz is a GUI front-end for byzanz which develop by QML.It is power by [GNOME/byzanz](https://github.com/GNOME/byzanz) and [qml-material](https://github.com/papyros/qml-material).It only test on deepin OS.
+![20160221145130](https://cloud.githubusercontent.com/assets/5242852/21955411/ad498e08-daa5-11e6-8335-5efc760e8200.png)
+
+![20160221145207](https://cloud.githubusercontent.com/assets/5242852/21955412/b07e7750-daa5-11e6-9d1a-066ee785a6ce.png)
 
 ##Dependencies
 
